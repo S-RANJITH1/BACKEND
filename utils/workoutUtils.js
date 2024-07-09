@@ -12,7 +12,7 @@ const connectDB = async () => {
     console.log("MongoDB Connected");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
-    process.exit(1); // Exit process with failure
+    process.exit(1);
   }
 };
 
@@ -47,7 +47,11 @@ const uploadWorkoutData = async () => {
       }
     ];
 
-    const insertedWorkouts = await Workout.insertMany(workoutData);
+    const insertedWorkouts = await Workout.insertMany(workoutData, {
+      w: 'majority',
+      wtimeout: 80000,
+      batchsize: 20000,
+    });
 
     console.log("Workout data uploaded successfully:", insertedWorkouts);
   } catch (error) {

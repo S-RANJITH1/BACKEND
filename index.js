@@ -19,7 +19,7 @@ const connectDB = async () => {
     await mongoose.connect(MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 50000,
+      serverSelectionTimeoutMS: 10000,
     });
     console.log(`MongoDB Connected: ${mongoose.connection.host}`);
   } catch (error) {
@@ -37,8 +37,10 @@ const startServer = async () => {
 
     await connectDB();
 
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-  } catch (error) {
+    app.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
+    });
+    } catch (error) {
     console.error(`Error starting server: ${error.message}`);
     process.exit(1);
   }
