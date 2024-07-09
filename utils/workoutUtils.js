@@ -5,11 +5,14 @@ const MONGODB_URI = "mongodb://localhost:27017/yourdatabase";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("MongoDB Connected");
   } catch (error) {
-    console.error("Error connecting to MongoDB:", error.message);
-    process.exit(1);
+    console.error("Error connecting to MongoDB:", error);
+    process.exit(1); // Exit process with failure
   }
 };
 
@@ -38,7 +41,7 @@ const uploadWorkoutData = async () => {
       },
       {
         user: "60e8b02fca785c4cf8f7a3e1",
-        category: "cycling",
+        category: "Cycling",
         caloriesBurned: 500,
         date: new Date("2024-07-11"),
       }
@@ -47,12 +50,12 @@ const uploadWorkoutData = async () => {
     await Workout.insertMany(workoutData, {
       w: 'majority',
       wtimeout: 30000,
-      batchSize: 1000,
+      batchSize: 10000,
     });
 
     console.log("Workout data uploaded successfully");
   } catch (error) {
-    console.error("Error uploading workout data:", error.message);
+    console.error("Error uploading workout data:", error);
   } finally {
     mongoose.connection.close();
   }
