@@ -12,7 +12,7 @@ const connectDB = async () => {
     console.log("MongoDB Connected");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
-    process.exit(1); // Exit process with failure
+    process.exit(1);
   }
 };
 
@@ -49,7 +49,7 @@ const uploadWorkoutData = async () => {
 
     await Workout.insertMany(workoutData, {
       w: 'majority',
-      wtimeout: 30000,
+      wtimeout: 60000,
       batchSize: 10000,
     });
 
