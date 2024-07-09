@@ -4,14 +4,17 @@ import Workout from "../models/Workout.js";
 const MONGODB_URI = "mongodb://localhost:27017/yourdatabase"; 
 
 const connectDB = async () => {
-    try {
-      await mongoose.connect(MONGODB_URI);
-      console.log("MongoDB Connected");
-    } catch (error) {
-      console.error("Error connecting to MongoDB:", error.message);
-      process.exit(1);
-    }
-  };
+  try {
+    await mongoose.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB Connected");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error.message);
+    process.exit(1); // Exit process with failure
+  }
+};
 
 const uploadWorkoutData = async () => {
   try {
@@ -44,9 +47,9 @@ const uploadWorkoutData = async () => {
       }
     ];
 
-    const newWorkout = await Workout.create(workoutData);
+    const insertedWorkouts = await Workout.insertMany(workoutData);
 
-    console.log("Workout data uploaded successfully",newWorkout);
+    console.log("Workout data uploaded successfully:", insertedWorkouts);
   } catch (error) {
     console.error("Error uploading workout data:", error);
   } finally {
