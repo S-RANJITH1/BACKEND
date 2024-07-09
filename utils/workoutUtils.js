@@ -1,9 +1,7 @@
-// uploadWorkoutData.js
-
 import mongoose from "mongoose";
-import Workout from "./models/Workout.js"; // Adjust path to your Workout model
+import Workout from "../models/Workout.js";
 
-const MONGODB_URI = "mongodb://localhost:27017/yourdatabase"; // Replace with your MongoDB URI
+const MONGODB_URI = "mongodb://localhost:27017/yourdatabase"; 
 
 const connectDB = async () => {
   try {
@@ -23,10 +21,9 @@ const uploadWorkoutData = async () => {
     // Connect to MongoDB
     await connectDB();
 
-    // Example workout data
     const workoutData = [
       {
-        user: "60e8b02fca785c4cf8f7a3e1", // Replace with a valid ObjectId of a User document
+        user: "60e8b02fca785c4cf8f7a3e1",
         category: "Running",
         caloriesBurned: 300,
         date: new Date("2024-07-10"),
@@ -37,10 +34,20 @@ const uploadWorkoutData = async () => {
         caloriesBurned: 200,
         date: new Date("2024-07-09"),
       },
-      // Add more workout data as needed
+      {
+        user: "60e8b02fca785c4cf8f7a3e1",
+        category: "Skipping",
+        caloriesBurned: 400,
+        date: new Date("2024-07-10"),
+      },
+      {
+        user: "60e8b02fca785c4cf8f7a3e1",
+        category: "cycling",
+        caloriesBurned: 500,
+        date: new Date("2024-07-11"),
+      }
     ];
 
-    // Insert workout data into MongoDB
     await Workout.insertMany(workoutData);
 
     console.log("Workout data uploaded successfully");
@@ -54,3 +61,5 @@ const uploadWorkoutData = async () => {
 
 // Call the function to upload workout data
 uploadWorkoutData();
+
+export { connectDB, uploadWorkoutData };

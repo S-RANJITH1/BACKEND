@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import User from "./models/User.js"; // Adjust the path to your User model
+import User from "../models/User.js";
 
-const MONGODB_URI = "mongodb://localhost:27017/yourdatabase"; // Replace with your MongoDB URI
+const MONGODB_URI = "mongodb://localhost:27017/yourdatabase";
 
 const connectDB = async () => {
   try {
@@ -21,14 +21,18 @@ const uploadUser = async () => {
     // Connect to MongoDB
     await connectDB();
 
-    // Example data to upload
     const userData = {
-      name: "Ranjith Kumar",
-      email: "ranjithk@gmail.com",
-      password: "password123",
-      age: 30,
+      name: "Will Jacks",
+      email: "willjack@gmail.com",
+      password: "will1234",
+      age: 25
     };
 
+    const existingUser = await User.findOne({ email: userData.email });
+    if (existingUser) {
+      console.log("User with this email already exists:", existingUser);
+      return;
+    }
     // Create a new instance of User model
     const newUser = new User(userData);
 
@@ -38,11 +42,14 @@ const uploadUser = async () => {
     console.log("User uploaded successfully:", newUser);
   } catch (error) {
     console.error("Error uploading user:", error.message);
+   if (error.code === 11000) {
+    console.error("Duplicate key error. User with this email already exists.");
+   }
   } finally {
-    // Close the connection
     mongoose.connection.close();
   }
 };
 
-// Call the upload function
 uploadUser();
+
+export { connectDB, uploadUser };

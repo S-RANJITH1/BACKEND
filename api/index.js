@@ -1,23 +1,12 @@
 import React, { useState } from "react";
-import API from '../api';
 import axios from "axios";
 
-
-const APi = axios.create({
+const API = axios.create({
   baseURL: 'http://localhost:7000/api',
   headers: {
     'Content-Type': 'application/json',
   },
 });
-
-export const SignUpUser = async (userData) => {
-  try {
-    const response = await API.post('/user/signup', userData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-};
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -26,12 +15,15 @@ const SignUp = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await axios.post("http://localhost:7000/api/user/signup", {
-        name,
-        email,
-        password,
-      });
+      const userData = {
+        name: name,
+        email: email,
+        password: password
+      };
+
+      const response = await API.post('/user/signup', userData);
       console.log("SignUp Response:", response.data);
+
       setName("");
       setEmail("");
       setPassword("");
@@ -64,6 +56,5 @@ const SignUp = () => {
     </div>
   );
 };
-
 
 export default SignUp;
