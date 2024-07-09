@@ -10,17 +10,13 @@ export const signUpUser = async (req, res) => {
   }
 
   try {
-    // Check if user already exists
     let existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Create new user
     const newUser = new User({ name, email, password });
     await newUser.save();
-
-    // Optionally, you can generate and send a token for authentication
 
     res.status(201).json({ message: "User created successfully", user: newUser });
   } catch (error) {

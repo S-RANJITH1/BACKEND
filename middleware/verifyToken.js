@@ -9,20 +9,17 @@ export const verifyToken = (req, res, next) => {
       return next(createError(401, "You are not authenticated!"));
     }
 
-    // Check if the token starts with "Bearer "
     if (!token.startsWith("Bearer ")) {
       return next(createError(401, "Invalid token format"));
     }
 
-    // Remove "Bearer " from string
     const authToken = token.split(" ")[1];
 
-    // Verify token
     jwt.verify(authToken, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         return next(createError(401, "Invalid token"));
       }
-      req.user = decoded; // Decoded payload contains user information
+      req.user = decoded;
       next();
     });
   } catch (err) {

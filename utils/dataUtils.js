@@ -5,10 +5,7 @@ const MONGODB_URI = "mongodb://localhost:27017/yourdatabase";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(MONGODB_URI);
     console.log("MongoDB Connected");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
@@ -18,7 +15,6 @@ const connectDB = async () => {
 
 const uploadUser = async () => {
   try {
-    // Connect to MongoDB
     await connectDB();
 
     const userData = {
@@ -33,10 +29,9 @@ const uploadUser = async () => {
       console.log("User with this email already exists:", existingUser);
       return;
     }
-    // Create a new instance of User model
+
     const newUser = new User(userData);
 
-    // Save the user to MongoDB
     await newUser.save();
 
     console.log("User uploaded successfully:", newUser);

@@ -7,20 +7,18 @@ import { connectDB as connectWorkoutData } from './utils/workoutUtils.js';
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
 app.use('/api', UserRoutes);
 
 // MongoDB connection
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000,
+      
+      serverSelectionTimeoutMS: 30000, // 30 seconds
+      socketTimeoutMS: 45000, // 45 seconds
     });
     console.log(`MongoDB Connected: ${mongoose.connection.host}`);
   } catch (error) {
@@ -32,17 +30,15 @@ const connectDB = async () => {
 // Start server
 const startServer = async () => {
   try {
-    // Connect to user data
+
     await connectUserData();
 
-    // Connect to workout data
     await connectWorkoutData();
 
-    // Connect to MongoDB
     await connectDB();
 
-    // Start the Express server
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+    app.listen(PORT, () => 
+      console.log(`Server started on port ${PORT}`));
   } catch (error) {
     console.error(`Error starting server: ${error.message}`);
     process.exit(1);

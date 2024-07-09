@@ -5,10 +5,7 @@ const MONGODB_URI = "mongodb://localhost:27017/yourdatabase";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(MONGODB_URI);
     console.log("MongoDB Connected");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
@@ -18,7 +15,6 @@ const connectDB = async () => {
 
 const uploadWorkoutData = async () => {
   try {
-    // Connect to MongoDB
     await connectDB();
 
     const workoutData = [
@@ -54,12 +50,10 @@ const uploadWorkoutData = async () => {
   } catch (error) {
     console.error("Error uploading workout data:", error.message);
   } finally {
-    // Close the connection
     mongoose.connection.close();
   }
 };
 
-// Call the function to upload workout data
 uploadWorkoutData();
 
 export { connectDB, uploadWorkoutData };
