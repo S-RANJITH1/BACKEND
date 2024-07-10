@@ -1,18 +1,12 @@
-import mongoose from "mongoose";
+import connectDB from "../db.js";
 import Workout from "../models/Workout.js";
 
-const MONGODB_URI = "mongodb://localhost:27017/yourdatabase";
-
-const connectDB = async () => {
+const connectWorkoutData = async () => {
   try {
-    await mongoose.connect(MONGODB_URI, {
-     // useNewUrlParser: true,
-     // useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 10000,
-    });
-    console.log("Workout Database Connected");
+    await connectDB();
+    console.log("Workout Data MongoDB Connected");
   } catch (error) {
-    console.error("Error connecting to Workout Database:", error.message);
+    console.error("Error connecting to Workout Data MongoDB:", error.message);
     process.exit(1);
   }
 };
@@ -52,7 +46,6 @@ const uploadWorkoutData = async () => {
       w: "majority",
       wtimeout: 30000,
       batchsize: 1000,
-      ordered: false,
     });
 
     console.log("Workout data uploaded successfully:", insertedWorkouts);
@@ -63,6 +56,4 @@ const uploadWorkoutData = async () => {
   }
 };
 
-uploadWorkoutData();
-
-export { connectDB, uploadWorkoutData };
+export { connectWorkoutData, uploadWorkoutData };

@@ -2,8 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import { MONGODB_URI, PORT } from "./config.js";
 import UserRoutes from "./routes/userRoutes.js";
-import { connectDB as connectUserData } from "./utils/dataUtils.js";
-import { connectDB as connectWorkoutData, uploadWorkoutData } from "./utils/workoutUtils.js";
+import { connectUserData } from "./utils/dataUtils.js";
+import { connectWorkoutData } from "./utils/workoutUtils.js";
 
 const app = express();
 
@@ -16,13 +16,13 @@ app.use("/api", UserRoutes);
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGODB_URI, {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-     serverSelectionTimeoutMS: 10000,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 10000,
     });
-    console.log(`MongoDB Connected: ${mongoose.connection.host}`);
+    console.log("MongoDB Connected");
   } catch (error) {
-    console.error(`Error connecting to MongoDB: ${error.message}`);
+    console.error("Error connecting to MongoDB:", error.message);
     process.exit(1);
   }
 };
@@ -33,12 +33,11 @@ const startServer = async () => {
     await connectUserData();
     await connectWorkoutData();
     await connectDB();
-    await uploadWorkoutData();
 
     app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
     });
-    } catch (error) {
+  } catch (error) {
     console.error(`Error starting server: ${error.message}`);
     process.exit(1);
   }
