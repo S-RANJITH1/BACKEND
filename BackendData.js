@@ -7,7 +7,7 @@ const BackendDataComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:7000/api/user');
+        const response = await axios.get('http://localhost:8000/api/user');
         setUserData(response.data); 
       } catch (error) {
         console.error('Error fetching data:', error);

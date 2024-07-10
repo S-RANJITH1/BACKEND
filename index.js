@@ -1,16 +1,15 @@
 import express from "express";
 import mongoose from "mongoose";
 import { MONGODB_URI, PORT } from "./config.js";
-import UserRoutes from "./routes/userRoutes.js";
-import { connectUserData } from "./utils/dataUtils.js";
-import { connectWorkoutData } from "./utils/workoutUtils.js";
+import userRoutes from "./routes/userRoutes.js"; 
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api", UserRoutes);
+// Use the userRoutes router
+app.use("/api", userRoutes);
 
 // MongoDB connection
 const connectDB = async () => {
@@ -30,8 +29,6 @@ const connectDB = async () => {
 // Start server
 const startServer = async () => {
   try {
-    await connectUserData();
-    await connectWorkoutData();
     await connectDB();
 
     app.listen(PORT, () => {

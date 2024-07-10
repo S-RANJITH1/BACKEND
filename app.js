@@ -44,7 +44,6 @@ const App = () => {
     try {
       const newWorkout = await addWorkout(token, workoutData);
       console.log('Added new workout:', newWorkout);
-      // Perform actions after adding workout
     } catch (error) {
       console.error('Error adding workout:', error);
     }
@@ -53,7 +52,7 @@ const App = () => {
   return (
     <div>
       <h1>Full Stack Developer</h1>
-      {/* Example form for signup/signin */}
+      
       <form>
         <input
           type="email"
