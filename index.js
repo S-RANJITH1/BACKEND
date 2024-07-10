@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { MONGODB_URI, PORT } from "./config.js";
 import userRoutes from "./routes/userRoutes.js"; 
+import workoutdataRoutes from "./routes/workoutdataRoutes.js"; // Corrected import
 import connectDB from "./db.js";
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Use the userRoutes router
 app.use("/api", userRoutes);
+app.use('/api/workoutdata', workoutdataRoutes);
 
 // Start server
 const startServer = async () => {
