@@ -6,8 +6,8 @@ const MONGODB_URI = "mongodb://localhost:27017/yourdatabase";
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+     // useNewUrlParser: true,
+     // useUnifiedTopology: true,
       serverSelectionTimeoutMS: 10000,
     });
     console.log("Workout Database Connected");

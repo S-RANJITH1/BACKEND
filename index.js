@@ -16,8 +16,8 @@ app.use("/api", UserRoutes);
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGODB_URI, {
-     useNewUrlParser: true,
-     useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
      serverSelectionTimeoutMS: 10000,
     });
     console.log(`MongoDB Connected: ${mongoose.connection.host}`);
