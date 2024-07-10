@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import { MONGODB_URI, PORT } from "./config.js";
-import userRoutes from "./routes/userRoutes.js"; 
-import workoutdataRoutes from "./routes/workoutdataRoutes.js"; // Corrected import
+import userRoutes from "./routes/userRoutes.js";
+import workoutdataRoutes from "./routes/workoutdataRoutes.js";
 import connectDB from "./db.js";
 
 const app = express();
@@ -10,11 +10,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Use the userRoutes router
+// Use the userRoutes and workoutdataRoutes routers
 app.use("/api", userRoutes);
-app.use('/api/workoutdata', workoutdataRoutes);
+app.use("/api/workoutdata", workoutdataRoutes);
 
-// Start server
+// MongoDB connection
 const startServer = async () => {
   try {
     await connectDB();
