@@ -5,7 +5,11 @@ const MONGODB_URI = "mongodb://localhost:27017/yourdatabase";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await mongoose.connect(MONGODB_URI, {
+     useNewUrlParser: true,
+     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 10000,
+    });
     console.log("MongoDB Connected");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error.message);
@@ -18,10 +22,10 @@ const uploadUser = async () => {
     await connectDB();
 
     const userData = {
-      name: "Will Jacks",
-      email: "willjack@gmail.com",
-      password: "will1234",
-      age: 25
+      name: "Jack Daniel",
+      email: "jd2@gmail.com",
+      password: "jd4567",
+      age: 27
     };
 
     const existingUser = await User.findOne({ email: userData.email });

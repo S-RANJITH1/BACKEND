@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { MONGODB_URI, PORT } from "./config.js";
 import UserRoutes from "./routes/userRoutes.js";
 import { connectDB as connectUserData } from "./utils/dataUtils.js";
-import { connectDB as connectWorkoutData } from "./utils/workoutUtils.js";
+import { connectDB as connectWorkoutData, uploadWorkoutData } from "./utils/workoutUtils.js";
 
 const app = express();
 
@@ -14,12 +14,11 @@ app.use("/api", UserRoutes);
 
 // MongoDB connection
 const connectDB = async () => {
-
   try {
     await mongoose.connect(MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 10000,
+     useNewUrlParser: true,
+     useUnifiedTopology: true,
+     serverSelectionTimeoutMS: 10000,
     });
     console.log(`MongoDB Connected: ${mongoose.connection.host}`);
   } catch (error) {
@@ -32,10 +31,9 @@ const connectDB = async () => {
 const startServer = async () => {
   try {
     await connectUserData();
-
     await connectWorkoutData();
-
     await connectDB();
+    await uploadWorkoutData();
 
     app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
