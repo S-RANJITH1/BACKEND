@@ -1,15 +1,12 @@
 import express from 'express';
+import WorkoutController from '../controllers/workoutController.js'; // Import the controller
+
 const router = express.Router();
 
-router.post('/api/workoutdata', (req, res) => {
-  try {
-
-    console.log('Received workout data:', req.body);
-    res.status(200).json({ message: 'Workout data received successfully' });
-  } catch (error) {
-    console.error('Error handling workout data:', error);
-    res.status(500).json({ message: 'Failed to handle workout data', error: error.message });
-  }
-});
+router.post('/', WorkoutController.createWorkout);
+router.get('/', WorkoutController.getAllWorkouts);
+router.get('/:id', WorkoutController.getWorkoutById);
+router.put('/:id', WorkoutController.updateWorkout);
+router.delete('/:id', WorkoutController.deleteWorkout);
 
 export default router;

@@ -42,11 +42,7 @@ const uploadWorkoutData = async () => {
       },
     ];
 
-    const insertedWorkouts = await Workout.insertMany(workoutData, {
-      w: "majority",
-      wtimeout: 30000,
-      batchsize: 1000,
-    });
+    const insertedWorkouts = await Workout.insertMany(workoutData);
 
     console.log("Workout data uploaded successfully:", insertedWorkouts);
   } catch (error) {
