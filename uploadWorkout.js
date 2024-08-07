@@ -1,18 +1,8 @@
 import mongoose from 'mongoose'; 
-import connectDB from "../db.js";
-import Workout from "../models/Workout.js";
+import connectDB from './db.js';
+import Workout from './models/Workout.js';
 
-const connectWorkoutData = async () => {
-  try {
-    await connectDB();
-    console.log("Workout Data MongoDB Connected");
-  } catch (error) {
-    console.error("Error connecting to Workout Data MongoDB:", error.message);
-    process.exit(1);
-  }
-};
-
-const uploadWorkoutData = async () => {
+export const uploadWorkoutData = async () => {
   try {
     await connectDB();
 
@@ -47,12 +37,8 @@ const uploadWorkoutData = async () => {
 
     console.log("Workout data uploaded successfully:", insertedWorkouts);
   } catch (error) {
-   
     console.error("Error uploading workout data:", error);
   } finally {
-  
     mongoose.connection.close();
   }
 };
-
-export { connectWorkoutData, uploadWorkoutData };

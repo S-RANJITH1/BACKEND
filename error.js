@@ -1,5 +1,6 @@
-export const createError = (status, message) => {
-  const err = new Error(message);
-  err.status = status;
-  return err;
+const errorHandler = (err, req, res, next) => {
+  console.error(err.stack);
+  res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
 };
+
+export default errorHandler;

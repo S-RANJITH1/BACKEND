@@ -1,9 +1,12 @@
+import 'dotenv/config'; 
 import express from 'express';
 import mongoose from 'mongoose';
-import { PORT } from './config.js';
+import { PORT } from './config.js'; 
 import userRoutes from './routes/userRoutes.js';
 import workoutdataRoutes from './routes/workoutdataRoutes.js';
 import connectDB from './db.js';
+import { uploadUserData } from './uploadData.js';
+import { uploadWorkoutData } from './uploadWorkout.js';
 
 const app = express();
 
@@ -17,6 +20,9 @@ const startServer = async () => {
   try {
     await connectDB();
     console.log('MongoDB connected successfully');
+
+    await uploadUserData();
+    await uploadWorkoutData();
 
     const server = app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
@@ -35,6 +41,7 @@ const startServer = async () => {
 
     process.on('SIGTERM', () => shutdown('SIGTERM'));
     process.on('SIGINT', () => shutdown('SIGINT'));
+
   } catch (error) {
     console.error(`Error starting server: ${error.message}`);
     process.exit(1);

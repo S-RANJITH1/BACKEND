@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import connectDB from './db.js';
 import User from './models/User.js';
 
-const uploadUserData = async () => {
+export const uploadUserData = async () => {
   try {
     await connectDB();
 
@@ -20,5 +20,3 @@ const uploadUserData = async () => {
     mongoose.connection.close();
   }
 };
-
-uploadUserData();
