@@ -19,7 +19,6 @@ app.use('/api/workouts', workoutdataRoutes);
 const startServer = async () => {
   try {
     await connectDB();
-    console.log('MongoDB connected successfully');
 
     await uploadUserData();
     await uploadWorkoutData();

@@ -9,13 +9,27 @@ export const uploadUserData = async () => {
     const userData = [
       { name: 'Alice', email: 'alice@example.com', password: 'password123' },
       { name: 'Bob', email: 'bob@example.com', password: 'password456' },
+      { name: 'Ranjith', email: 'ranjith@gmail.com', password: 'password789'}
     ];
 
-    const insertedUsers = await User.insertMany(userData);
+    const operations = userData.map(user => ({
+      updateOne: {
+        filter: { email: user.email },
+        update: { $set: user },
+        upsert: true
+      }
+    }));
 
-    console.log('User data uploaded successfully:', insertedUsers);
+    const result = await User.bulkWrite(operations);
+
+    console.log('User data processed successfully:', result);
+
   } catch (error) {
-    console.error('Error uploading user data:', error);
+    if (error.code === 11000) {
+      console.error('Duplicate key error:', error.message);
+    } else {
+      console.error('Error uploading user data:', error);
+    }
   } finally {
     mongoose.connection.close();
   }
