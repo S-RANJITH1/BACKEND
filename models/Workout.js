@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const workoutSchema = new mongoose.Schema({
+const WorkoutSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -17,9 +17,10 @@ const workoutSchema = new mongoose.Schema({
   date: {
     type: Date,
     required: true,
+    default: Date.now,
   },
 });
 
-const Workout = mongoose.model('Workout', workoutSchema);
+const Workout = mongoose.model('Workout', WorkoutSchema);
 
 export default Workout;

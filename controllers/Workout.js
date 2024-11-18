@@ -4,7 +4,6 @@ export const createWorkout = async (req, res) => {
   const { user, category, caloriesBurned, date } = req.body;
 
   try {
-    
     const newWorkout = new Workout({
       user,
       category,
@@ -16,6 +15,7 @@ export const createWorkout = async (req, res) => {
 
     res.status(201).json(newWorkout);
   } catch (error) {
+    console.error("Create Workout Error:", error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -25,6 +25,7 @@ export const getAllWorkouts = async (req, res) => {
     const workouts = await Workout.find();
     res.status(200).json(workouts);
   } catch (error) {
+    console.error("Get All Workouts Error:", error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -40,6 +41,7 @@ export const getWorkoutById = async (req, res) => {
 
     res.status(200).json(workout);
   } catch (error) {
+    console.error("Get Workout By ID Error:", error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -58,6 +60,7 @@ export const updateWorkout = async (req, res) => {
 
     res.status(200).json(workout);
   } catch (error) {
+    console.error("Update Workout Error:", error);
     res.status(500).json({ message: 'Server error' });
   }
 };
@@ -73,6 +76,7 @@ export const deleteWorkout = async (req, res) => {
 
     res.status(200).json({ message: 'Workout deleted successfully' });
   } catch (error) {
+    console.error("Delete Workout Error:", error);
     res.status(500).json({ message: 'Server error' });
   }
 };

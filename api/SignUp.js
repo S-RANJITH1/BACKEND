@@ -1,40 +1,36 @@
 import React, { useState } from "react";
-import axios from "axios";
-
-const API = axios.create({
-  baseURL: 'http://localhost:8000/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+import API from "./API";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(""); 
-  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSignUp = async () => {
+    if (!name || !email || !password) {
+      setError("All fields are required.");
+      return;
+    }
+
     setLoading(true);
     setError("");
+    setSuccess(false);
 
     try {
-      const userData = {
-        name,
-        email,
-        password
-      };
-
+      const userData = { name, email, password };
       const response = await API.post('/user/signup', userData);
       console.log("SignUp Response:", response.data);
 
       setName("");
       setEmail("");
       setPassword("");
+      setSuccess("Sign-up successful. Please log in.");
     } catch (error) {
       console.error("SignUp Error:", error);
-      setError("Sign-up failed. Please try again.");
+      setError(error.response?.data?.message || "Sign-up failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -44,6 +40,7 @@ const SignUp = () => {
     <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
       <h2>Sign Up</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+      {success && <p style={{ color: 'green' }}>{success}</p>}
       <input
         type="text"
         placeholder="Name"
